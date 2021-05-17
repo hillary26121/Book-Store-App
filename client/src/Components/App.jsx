@@ -1,19 +1,23 @@
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
+import { useEffect, useState} from 'react';
+import axios from 'axios';
 import SignIn from './SignIn';
 import Search from './Search';
 import BookDetails from './BookDetails'
 import BookShelf from './BookShelf';
+import React from 'react';
+import NavBar from './NavBar';
 
 
 function App() {
+
   return(
     <>
+    <NavBar/>
    
       <Switch>
+     
 
-        <Route path = '/search'>
-          <Search/>
-        </Route>
 
         <Route path = '/bookId'>
           <BookDetails/>
@@ -23,9 +27,21 @@ function App() {
           <BookShelf/>
         </Route>
 
-        <Route path ='signin'>
+        
+        <Route path = '/search'>
+          <Search/>
+        </Route>
+
+        <Route path = '/bookdetails'>
+          <BookDetails/>
+        </Route>
+        <Route path ='/signin'>
           <SignIn/>
         </Route>
+        <Route>
+          <Redirect to ='/signin'/>
+        </Route>
+
       </Switch>
 
     </>
