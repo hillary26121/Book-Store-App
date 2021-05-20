@@ -1,12 +1,11 @@
-import {useState, useEffect, useContext} from 'react';
+import {useState, useContext} from 'react';
 import { useHistory } from 'react-router-dom';
 import { AccessTokenContext } from "../Context/AccessTokenContext";
 import {AccessTokenProvider} from '../Context/AccessTokenContext'
 import axios from 'axios';
-import BookShelf from './BookShelf'
 
 
-function SignIn(e) {
+function SignIn() {
 
     
   
@@ -14,17 +13,16 @@ function SignIn(e) {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const { login, setToken, getToken, token } = useContext(AccessTokenContext);
+    const { login, getToken } = useContext(AccessTokenContext);
     const history = useHistory();
   
     const signIn = (e)=>{
-      e.preventDefault();
       setIsLoading(true);
       axios.request({
         method: 'POST',
         url: '/api/signin',
         headers: {
-          Authorization: `Bearer ${setToken}`,
+          Authorization: `Bearer ${getToken}`,
           'Content-Type': 'application/json',
         },
         data:{
@@ -48,27 +46,10 @@ function SignIn(e) {
       })
     }
   
-    // const logout =()=>{
-    //     setToken('');
-    //     setIsLoading(false);
-    //     setErrorMessage('');
-
-    // }
 
   
-//   useEffect( ()=>{
-//       signIn();
-//   }, []); 
-  
-  if(token){
-    return (<BookShelf/> 
-    )
-    
-  }else
-  
 
- 
-    return(
+ return(
     
     <>
      <label htmlFor="">Username: </label>

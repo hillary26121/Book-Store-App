@@ -1,6 +1,4 @@
 import {Switch, Route, Redirect} from 'react-router-dom';
-import { useEffect, useState} from 'react';
-import axios from 'axios';
 import SignIn from './SignIn';
 import Search from './Search';
 import BookDetails from './BookDetails'
@@ -25,7 +23,7 @@ function App() {
           <BookDetails/>
         </Route>
 
-        <ProtectedRoute exact path = "/bookshelf">
+        <ProtectedRoute path = "/bookshelf">
           <BookShelf />
       </ProtectedRoute>
 

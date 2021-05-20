@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function NavBar({logout}){
+function NavBar(){
     return(
 <div id = 'navbar'>
 <Link to = "signin" class = "navbar-link">Sign In</Link>
