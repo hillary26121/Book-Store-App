@@ -7,6 +7,8 @@ import BookDetails from './BookDetails'
 import BookShelf from './BookShelf';
 import React from 'react';
 import NavBar from './NavBar';
+import {AccessTokenProvider} from '../Context/AccessTokenContext';
+import ProtectedRoute from '../Context/ProtectedRoute'
 
 
 function App() {
@@ -14,18 +16,18 @@ function App() {
   return(
     <>
     <NavBar/>
-   
+   <AccessTokenProvider>
       <Switch>
      
-
+      
 
         <Route path = '/bookId'>
           <BookDetails/>
         </Route>
 
-        <Route path = '/bookshelf'>
-          <BookShelf/>
-        </Route>
+        <ProtectedRoute exact path = "/bookshelf">
+          <BookShelf />
+      </ProtectedRoute>
 
         
         <Route path = '/search'>
@@ -35,7 +37,7 @@ function App() {
         <Route path = '/bookdetails'>
           <BookDetails/>
         </Route>
-        <Route path ='/signin'>
+        <Route exact path ='/signin'>
           <SignIn/>
         </Route>
         <Route>
@@ -43,7 +45,7 @@ function App() {
         </Route>
 
       </Switch>
-
+      </AccessTokenProvider>
     </>
   )
 }

@@ -1,17 +1,21 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
+import { useHistory } from 'react-router-dom';
+import { AccessTokenContext } from "../Context/AccessTokenContext";
+import {AccessTokenProvider} from '../Context/AccessTokenContext'
 import axios from 'axios';
 import BookShelf from './BookShelf'
 
 
-function SignIn() {
+function SignIn(e) {
 
     
-    const [token, setToken] = useState('');
+  
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-
+    const { login, setToken, getToken, token } = useContext(AccessTokenContext);
+    const history = useHistory();
   
     const signIn = (e)=>{
       e.preventDefault();
@@ -20,7 +24,7 @@ function SignIn() {
         method: 'POST',
         url: '/api/signin',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${setToken}`,
           'Content-Type': 'application/json',
         },
         data:{
@@ -32,23 +36,24 @@ function SignIn() {
       })
       
       .then((response)=>{
-        setToken(response.data.token)
+        login(response.data.token)
+        history.push('/bookshelf')
         console.log(response)
       })
       .catch( (error)=>{
         console.error(error);
         if(error.response && error.response.status === 401){
-          setErrorMessage("You done messed up parnter. Try the CORRECT information this time!");
+          setErrorMessage("You done messed up partner. Try the CORRECT information this time!");
         } else{setErrorMessage("actually, i have no idea what's messed up. try again later!")}
       })
     }
   
-    const logout =()=>{
-        setToken('');
-        setIsLoading(false);
-        setErrorMessage('');
+    // const logout =()=>{
+    //     setToken('');
+    //     setIsLoading(false);
+    //     setErrorMessage('');
 
-    }
+    // }
 
   
 //   useEffect( ()=>{
@@ -56,7 +61,7 @@ function SignIn() {
 //   }, []); 
   
   if(token){
-    return (<BookShelf token = {token} logout={logout} setToken={setToken} username = {username} password = {password}/> 
+    return (<BookShelf/> 
     )
     
   }else
@@ -73,7 +78,7 @@ function SignIn() {
      <button onClick= {signIn}> Sign In</button>
      {isLoading && <p>Loading ...</p>}
      {errorMessage && (
-        <div className="alert alert-danger" role="alert">
+        <div id = 'error-message' class= 'alert alert danger'>
           {errorMessage}
         </div>
       )}

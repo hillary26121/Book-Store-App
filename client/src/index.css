@@ -26,6 +26,14 @@ body {
 .navbar-link:hover{
   color: white;
 }
+#error-message{
+  /* display: flex;
+  width: 500px;
+ align-items: center;
+ justify-content: center;
+ background-color: red; */
+
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

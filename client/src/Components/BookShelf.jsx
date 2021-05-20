@@ -1,6 +1,10 @@
-import { useEffect, useHistory } from 'react';
+import { useEffect, useHistory, useContext} from 'react';
 import axios from 'axios';
 import SignIn from './SignIn';
+import { AccessTokenContext } from "../Context/AccessTokenContext";
+import {AccessTokenProvider} from '../Context/AccessTokenContext'
+
+// const { getToken } = useContext(AccessTokenContext);
 
 function BookShelf({token, setToken, username, password}){
 const getBooks = () =>{
