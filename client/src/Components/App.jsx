@@ -16,12 +16,6 @@ function App() {
     <NavBar/>
    <AccessTokenProvider>
       <Switch>
-     
-      
-
-        <Route path = '/bookId'>
-          <BookDetails/>
-        </Route>
 
         <ProtectedRoute path = "/bookshelf">
           <BookShelf />

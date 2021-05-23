@@ -6,7 +6,7 @@ import { AccessTokenProvider } from "../Context/AccessTokenContext";
 function BookShelf() {
   const { getToken, logOut } = useContext(AccessTokenContext);
   const [bookShelf, setBookShelf] = useState({});
-  const [shelf, setShelf] = useState('');
+  const [shelf, setShelf] = useState("");
   const [books, setBooks] = useState("");
   const getBookShelf = () => {
     axios
@@ -19,6 +19,7 @@ function BookShelf() {
         },
       })
       .then((response) => {
+        console.log(response);
         setBookShelf(response.data.books);
       });
   };
@@ -36,40 +37,124 @@ function BookShelf() {
         },
       })
       .then((response) => {
-        setBooks(response.data.books);
+        console.log(response);
+        setBookShelf(response.data.books);
       });
   };
 
   useEffect(() => {
     getBookShelf();
   }, []);
-  
+
+  const removeBook = (bookId) => {
+    axios
+      .request({
+        method: "DELETE",
+        url: `/api/bookshelf/${bookId}`,
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setBookShelf(response.data.books);
+      });
+  };
+
   return (
     <div>
-      <h1>Book Shelf</h1>
-      <h2>
-        Click to log out <button onClick={logOut}>Log Out</button>
-      </h2>
-      {bookShelf && bookShelf.currentlyReading.map((book) => {
-        return (
-          <div>
-            <select name="" id="book-dropdown">
-              <option value="want-to-read">
-                Want to Read
-              </option>
-              <option value="currently-reading">Currently Reading</option>
-              <option value="read">Read</option>
-            </select>
-            <h1>{book.title}</h1>
-            <img
-              src={book.imageLinks.thumbnail}
-              alt="photo of 'pokemon handbook' cover"
-            />
-          </div>
-        );
-      })}
-      <button onClick={getBookShelf}>click</button>
-      <button onClick={addBook}>add book api</button>
+      <div class="shelf">
+        <h2 id = 'currently-reading'>Currently Reading</h2>
+        {bookShelf &&
+          bookShelf.currentlyReading &&
+          bookShelf.currentlyReading.map((book) => {
+            return (
+              <div>
+                <h3>{book.title}</h3>
+                <img
+                  src={book.imageLinks.thumbnail}
+                  alt="photo of 'pokemon handbook' cover"
+                />
+                <select
+                  name=""
+                  id="book-dropdown"
+                  onChange={(e) => addBook(book.id, e.currentTarget.value)}
+                >
+                  <option value="wantToRead">Want to Read</option>
+                  <option value="currentlyReading" selected>
+                    Currently Reading
+                  </option>
+                  <option value="read">Read</option>
+                </select>
+                <button onClick={(e) => removeBook(book.id, e.target.value)}>
+                  Delete Book
+                </button>
+              </div>
+            );
+          })}
+      </div>
+      <div class="shelf">
+        <h2 id = 'want-to-read'>Want To Read</h2>
+        {bookShelf &&
+          bookShelf.wantToRead &&
+          bookShelf.wantToRead.map((book) => {
+            return (
+              <div>
+                {" "}
+                <h3>{book.title}</h3>
+                <img
+                  src={book.imageLinks.thumbnail}
+                  alt="photo of 'pokemon handbook' cover"
+                />
+                <select
+                  name=""
+                  id="book-dropdown"
+                  onChange={(e) => addBook(book.id, e.currentTarget.value)}
+                >
+                  <option value="wantToRead" selected>
+                    Want to Read
+                  </option>
+                  <option value="currentlyReading">Currently Reading</option>
+                  <option value="read">Read</option>
+                </select>
+                <button onClick={(e) => removeBook(book.id, e.target.value)}>
+                  Delete Book
+                </button>
+              </div>
+            );
+          })}
+      </div>
+
+      <div class="shelf">
+        <h2 id = 'read'>Read</h2>
+        {bookShelf &&
+          bookShelf.read &&
+          bookShelf.read.map((book) => {
+            return (
+              <div>
+                <h3>{book.title}</h3>
+                <img
+                  src={book.imageLinks.thumbnail}
+                  alt="photo of 'pokemon handbook' cover"
+                />
+                <select
+                  name=""
+                  id="book-dropdown"
+                  onChange={(e) => addBook(book.id, e.currentTarget.value)}
+                >
+                  <option value="wantToRead">Read </option>
+                  <option value="currentlyReading">Currently Reading</option>
+                  <option value="read" selected>
+                    Read
+                  </option>
+                </select>
+                <button onClick={(e) => removeBook(book.id, e.target.value)}>
+                  Delete Book
+                </button>
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 }

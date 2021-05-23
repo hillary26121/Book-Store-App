@@ -9,8 +9,8 @@ body {
 
 #navbar{
   display: flex;
-  justify-content: center;
-  align-items: center;
+  padding-left: 10px;
+  padding-top: 10px;
   font-size: 25px;
   width: 100%;
   height: 50px;
@@ -19,21 +19,33 @@ body {
 
 .navbar-link{
   padding-right: 30px;
-  color: black;
+  color:midnightblue;
   text-decoration: none;
 }
 
 .navbar-link:hover{
   color: white;
 }
-#error-message{
-  /* display: flex;
-  width: 500px;
- align-items: center;
- justify-content: center;
- background-color: red; */
+
+#header{
+  text-align: center;
+  color: navy;
+}
+.shelf{
+  align-items: center;
+  justify-content: center;
+  color: navy;
+  font-weight: lighter;
+  display: flex;
+  padding-left: 10px;
+  padding-bottom: 30px;
+  margin-top: 10px;
+  border-bottom: 10px groove grey;
+  box-shadow: 5px 5px grey;
+
 
 }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

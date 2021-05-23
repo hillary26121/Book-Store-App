@@ -8,10 +8,10 @@ function Search() {
   const [search, setSearch] = useState('');
   const [userInput, setUserInput] = useState("");
 
-  const searchBooks = (bookTitle)=>{
+  const searchBooks = ()=>{
       axios.request({
           method: 'GET',
-          url: `/api/book/search/${bookTitle}`,
+          url: `/api/book/search/${userInput}`,
           headers:{
               Authorization: `Bearer ${getToken}`,
               'Content-Type': 'application/json'
@@ -22,23 +22,54 @@ function Search() {
         setSearch(response.data.books)
       })
   }
+  const addBook = (bookId, shelfKey) => {
+    console.log(bookId);
+    console.log(shelfKey);
+    axios
+      .request({
+        method: "PUT",
+        url: `/api/bookshelf/${bookId}/${shelfKey}`,
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+      });
+  };
   return (
     <div>
-      <label htmlFor="">Search For Books:</label>
+      <label htmlFor="">Search For Books: </label>
       <input
         type="text"
         value={userInput}
         onChange={(e) => {
           setUserInput(e.target.value);
         }}
+        
       />
-      {/* {books.map( (book)=>{
+      <button onClick={searchBooks}>Search</button>
+      {search && search.map( (book)=>{
           return(
-              <div>{book}</div>
+          <div> <h3>{book.title}</h3>
+          <img
+            src={book.imageLinks && book.imageLinks.thumbnail}
+            alt=""
+          />
+            <select name="" id="book-dropdown" onChange={(e)=>addBook(book.id, e.currentTarget.value)}>
+              <option value="">Add to a shelf</option>
+              <option value="wantToRead">
+                Want to Read
+              </option>
+              <option value="currentlyReading" >Currently Reading</option>
+              <option value="read">Read</option>
+              
+            </select>
+           
+          </div>
           )
-      })} */}
-      <button onClick={searchBooks}>Search API</button>
-      <button onClick = {logOut}>Click to log out</button>
+      })}
+      
     </div>
   );
 }
