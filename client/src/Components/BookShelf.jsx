@@ -64,13 +64,13 @@ function BookShelf() {
   return (
     <div>
       <div class="shelf">
-        <h2 id = 'currently-reading'>Currently Reading</h2>
+        <div class = 'shelf-title'><h2 id = 'currently-reading'>Currently Reading</h2></div>
         {bookShelf &&
           bookShelf.currentlyReading &&
           bookShelf.currentlyReading.map((book) => {
             return (
               <div>
-                <h3>{book.title}</h3>
+               <h3>{book.title}</h3>
                 <img
                   src={book.imageLinks.thumbnail}
                   alt="photo of 'pokemon handbook' cover"
@@ -79,28 +79,28 @@ function BookShelf() {
                   name=""
                   id="book-dropdown"
                   onChange={(e) => addBook(book.id, e.currentTarget.value)}
-                >
+                > 
                   <option value="wantToRead">Want to Read</option>
                   <option value="currentlyReading" selected>
                     Currently Reading
                   </option>
                   <option value="read">Read</option>
                 </select>
-                <button onClick={(e) => removeBook(book.id, e.target.value)}>
-                  Delete Book
+                <div><button class = 'delete-button' onClick={(e) => removeBook(book.id, e.target.value)}>
+                  Remove Book
                 </button>
+                </div>
               </div>
             );
           })}
       </div>
       <div class="shelf">
-        <h2 id = 'want-to-read'>Want To Read</h2>
+        <div class = 'shelf-title'><h2 id = 'want-to-read'>Want To Read</h2></div>
         {bookShelf &&
           bookShelf.wantToRead &&
           bookShelf.wantToRead.map((book) => {
             return (
               <div>
-                {" "}
                 <h3>{book.title}</h3>
                 <img
                   src={book.imageLinks.thumbnail}
@@ -117,16 +117,18 @@ function BookShelf() {
                   <option value="currentlyReading">Currently Reading</option>
                   <option value="read">Read</option>
                 </select>
-                <button onClick={(e) => removeBook(book.id, e.target.value)}>
-                  Delete Book
+                <div>
+                <button class = 'delete-button' onClick={(e) => removeBook(book.id, e.target.value)}>
+                  Remove Book
                 </button>
+                </div>
               </div>
             );
           })}
       </div>
 
       <div class="shelf">
-        <h2 id = 'read'>Read</h2>
+        <div class = 'shelf-title'><h2 id = 'read'>Read</h2></div>
         {bookShelf &&
           bookShelf.read &&
           bookShelf.read.map((book) => {
@@ -142,15 +144,17 @@ function BookShelf() {
                   id="book-dropdown"
                   onChange={(e) => addBook(book.id, e.currentTarget.value)}
                 >
-                  <option value="wantToRead">Read </option>
+                  <option value="wantToRead">Want to Read </option>
                   <option value="currentlyReading">Currently Reading</option>
                   <option value="read" selected>
                     Read
                   </option>
                 </select>
-                <button onClick={(e) => removeBook(book.id, e.target.value)}>
-                  Delete Book
+                <div>
+                <button class = 'delete-button' onClick={(e) => removeBook(book.id, e.target.value)}>
+                  Remove Book
                 </button>
+                </div>
               </div>
             );
           })}

@@ -32,20 +32,34 @@ body {
   color: navy;
 }
 .shelf{
-  align-items: center;
-  justify-content: center;
   color: navy;
   font-weight: lighter;
   display: flex;
   padding-left: 10px;
   padding-bottom: 30px;
   margin-top: 10px;
-  border-bottom: 10px groove grey;
   box-shadow: 5px 5px grey;
 
 
 }
 
+.shelf-title{
+ padding-right: 100px;
+}
+
+.delete-button{
+  height: 25px;
+  border-radius: 11px;
+  font-size: 13px;
+  background-color:lightsalmon;
+  color: white;
+  opacity: .8;
+
+}
+
+.delete-button:hover{
+  background-color: navy;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
