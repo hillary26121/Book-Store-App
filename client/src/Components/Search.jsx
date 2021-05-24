@@ -1,4 +1,4 @@
-import { useEffect, useHistory, useContext, useState } from "react";
+import {useHistory, useContext, useState } from "react";
 import axios from "axios";
 import { AccessTokenContext } from "../Context/AccessTokenContext";
 import { AccessTokenProvider } from "../Context/AccessTokenContext";
@@ -35,7 +35,7 @@ function Search() {
         },
       })
       .then((response) => {
-      });
+      })
   };
   return (
     <div>

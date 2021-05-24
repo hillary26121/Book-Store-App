@@ -1,13 +1,17 @@
-import { useEffect, useHistory, useContext, useState } from "react";
+import { useEffect, useContext, useState } from "react";
+import { useHistory } from 'react-router-dom';
 import axios from "axios";
 import { AccessTokenContext } from "../Context/AccessTokenContext";
 import { AccessTokenProvider } from "../Context/AccessTokenContext";
 
+
+
+
 function BookShelf() {
   const { getToken, logOut } = useContext(AccessTokenContext);
   const [bookShelf, setBookShelf] = useState({});
-  const [shelf, setShelf] = useState("");
-  const [books, setBooks] = useState("");
+  const [details, setDetails] = useState('');
+    const history = useHistory();
   const getBookShelf = () => {
     axios
       .request({
@@ -25,8 +29,6 @@ function BookShelf() {
   };
 
   const addBook = (bookId, shelfKey) => {
-    console.log(bookId);
-    console.log(shelfKey);
     axios
       .request({
         method: "PUT",
@@ -39,7 +41,10 @@ function BookShelf() {
       .then((response) => {
         console.log(response);
         setBookShelf(response.data.books);
-      });
+      })
+      .catch( (error)=>{
+          console.error(error);
+      })
   };
 
   useEffect(() => {
@@ -60,6 +65,25 @@ function BookShelf() {
         setBookShelf(response.data.books);
       });
   };
+
+  const getBookDetails = (bookId) => {
+    axios
+      .request({
+        method: "GET",
+        url: `/api/bookshelf/${bookId}`,
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setDetails(response.data.books);
+        history.push('/bookdetails')
+      });
+  };
+
+
+ 
 
   return (
     <div>
@@ -90,6 +114,7 @@ function BookShelf() {
                   Remove Book
                 </button>
                 </div>
+                <div><button onClick = {(e)=>getBookDetails(book.id, e.target.value)}>Book Details</button></div>
               </div>
             );
           })}
