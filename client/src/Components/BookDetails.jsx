@@ -41,9 +41,13 @@ function BookDetails(){
     <div>
         <button onClick = {logOut} class = 'log-out'>Click to Log Out</button>
         {details && details.map( (book)=>{
-            console.log(book)
             return(
-                <div><h2>{book.title}</h2></div>
+                <div><h2>{book.title}</h2>
+                <img src={book.imageLinks && book.imageLinks.thumbnail} alt=""/>
+                <h3>{book.author && book.author}</h3>
+                <h3>{book.description && book.description}</h3>
+                </div>
+
             )
         })}
     </div>

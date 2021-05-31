@@ -171,6 +171,7 @@ function BookShelf() {
                   Remove Book
                 </button>
                 </div>
+                <button onClick = {(e)=>getBookDetails(book.id, e.target.value)}>Book Details</button>
               </div>
             );
           })}
@@ -204,6 +205,7 @@ function BookShelf() {
                   Remove Book
                 </button>
                 </div>
+                <button onClick = {(e)=>getBookDetails(book.id, e.target.value)}>Book Details</button>
               </div>
             );
           })}
