@@ -32,9 +32,9 @@ function App() {
         <Route path ='/signin'>
           <SignIn/>
         </Route>
-        {/* <Route>
+        <Route>
           <Redirect to ='/signin'/>
-        </Route> */}
+        </Route>
 
       </Switch>
       </AccessTokenProvider>

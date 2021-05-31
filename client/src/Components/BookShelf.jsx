@@ -132,7 +132,7 @@ function BookShelf() {
             return (
               <div>
                 <h3>{book.title}</h3>
-                <a href=""onClick = {(e)=>getBookDetails(book.id, e.target.value)}><img
+                <a onClick = {(e)=>getBookDetails(book.id, e.target.value)}><img
                   src={book.imageLinks.thumbnail}
                   alt="photo of 'pokemon handbook' cover"
                 />
@@ -166,7 +166,7 @@ function BookShelf() {
             return (
               <div>
                 <h3>{book.title}</h3>
-                <a href="" onClick = {(e)=>getBookDetails(book.id, e.target.value)}><img
+                <a onClick = {(e)=>getBookDetails(book.id, e.target.value)}><img
                   src={book.imageLinks.thumbnail}
                   alt="photo of 'pokemon handbook' cover"
                 />
