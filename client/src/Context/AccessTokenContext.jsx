@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import axios from 'axios';
 
 export const AccessTokenContext = createContext();
 
@@ -9,7 +10,7 @@ export function AccessTokenProvider({ children }) {
     setToken(token);
   }
   function logOut(){
-    setToken('');
+    setToken(''); 
   }
   const getToken = ()=> token;
   const hasToken =() =>{
@@ -17,12 +18,29 @@ export function AccessTokenProvider({ children }) {
     else return false;
   }
 
+  const refreshToken = () =>{
+     return axios
+     .request({
+         method: 'GET',
+         url: '/api/refresh',
+     })
+     .then( (response)=>{
+         setToken(response.data.token);
+     })
+     .catch( (error)=>{
+         if(error.response && error.response.status === 401){
+             
+         }
+     })
+  }
+
   return<><AccessTokenContext.Provider
   value={{
     login,
     getToken,
     hasToken,
-    logOut
+    logOut,
+    refreshToken
   }}>
     {children}
     

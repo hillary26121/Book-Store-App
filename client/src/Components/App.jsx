@@ -22,13 +22,13 @@ function App() {
       </ProtectedRoute>
 
         
-        <Route path = '/search'>
+        <ProtectedRoute path = '/search'>
           <Search/>
-        </Route>
+        </ProtectedRoute>
 
-        <Route path = '/bookdetails'>
+        <ProtectedRoute path = '/book/:bookid'>
           <BookDetails/>
-        </Route>
+        </ProtectedRoute>
         <Route exact path ='/signin'>
           <SignIn/>
         </Route>

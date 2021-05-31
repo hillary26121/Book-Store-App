@@ -66,6 +66,49 @@ body {
 .delete-button:hover{
   background-color: navy;
 }
+
+.log-out{
+  margin-top: 20px;
+  margin-bottom: 30px;
+  margin-left: 10px;
+  height: 30px;
+  border-radius: 11px;
+  font-size: 13px;
+  background-color:lightsalmon;
+  color: white;
+  opacity: .8;
+
+}
+
+.log-out:hover{
+  background-color: navy;
+}
+
+#search-label{
+  font-size: 25px;
+}
+
+.search-button{
+  margin-left: 10px;
+  height: 35px;
+  width: 90px;
+  font-size: 20px;
+  border-radius: 11px;
+  background-color:lightsalmon;
+  color: white;
+  opacity: .8;
+
+}
+
+.search-button:hover{
+  background-color: navy;
+}
+
+#search-input{
+  border-radius: 10px;
+  height: 25px;
+  width: 200px;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

@@ -1,5 +1,5 @@
 import { useEffect, useContext, useState } from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import axios from "axios";
 import { AccessTokenContext } from "../Context/AccessTokenContext";
 import { AccessTokenProvider } from "../Context/AccessTokenContext";
@@ -9,8 +9,10 @@ import { AccessTokenProvider } from "../Context/AccessTokenContext";
 
 function BookShelf() {
   const { getToken, logOut } = useContext(AccessTokenContext);
+  const { bookId } = useParams();
   const [bookShelf, setBookShelf] = useState({});
   const [details, setDetails] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
     const history = useHistory();
   const getBookShelf = () => {
     axios
@@ -25,7 +27,13 @@ function BookShelf() {
       .then((response) => {
         console.log(response);
         setBookShelf(response.data.books);
-      });
+      })
+      .catch( (error)=>{
+        console.error(error);
+        if(error.response && error.response.status === 401){
+          setErrorMessage("You aren't logged in!");
+        } else{setErrorMessage("Something is wrong here, come back later when I've figured out my life.")}
+      })
   };
 
   const addBook = (bookId, shelfKey) => {
@@ -43,7 +51,10 @@ function BookShelf() {
         setBookShelf(response.data.books);
       })
       .catch( (error)=>{
-          console.error(error);
+        console.error(error);
+        if(error.response && error.response.status === 401){
+          setErrorMessage("You aren't logged in!");
+        } else{setErrorMessage("Something is wrong here, come back later when I've figured out my life.")}
       })
   };
 
@@ -63,23 +74,35 @@ function BookShelf() {
       })
       .then((response) => {
         setBookShelf(response.data.books);
-      });
+      })
+      .catch( (error)=>{
+        console.error(error);
+        if(error.response && error.response.status === 401){
+          setErrorMessage("You aren't logged in!");
+        } else{setErrorMessage("Something is wrong here, come back later when I've figured out my life.")}
+      })
   };
 
   const getBookDetails = (bookId) => {
     axios
       .request({
         method: "GET",
-        url: `/api/bookshelf/${bookId}`,
+        url: `/api/book/${bookId}`,
         headers: {
           Authorization: `Bearer ${getToken()}`,
           "Content-Type": "application/json",
         },
       })
       .then((response) => {
-        setDetails(response.data.books);
-        history.push('/bookdetails')
-      });
+        setDetails(response.data.book);
+        history.push('/book/:bookId')
+      })
+      .catch( (error)=>{
+        console.error(error);
+        if(error.response && error.response.status === 401){
+          setErrorMessage("You aren't logged in!");
+        } else{setErrorMessage("Something is wrong here, come back later when I've figured out my life.")}
+      })
   };
 
 
@@ -87,6 +110,7 @@ function BookShelf() {
 
   return (
     <div>
+        <button onClick = {logOut} class = 'log-out'>Click to Log Out</button>
       <div class="shelf">
         <div class = 'shelf-title'><h2 id = 'currently-reading'>Currently Reading</h2></div>
         {bookShelf &&
@@ -184,6 +208,7 @@ function BookShelf() {
             );
           })}
       </div>
+      
     </div>
   );
 }

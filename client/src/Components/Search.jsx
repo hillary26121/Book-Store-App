@@ -1,10 +1,10 @@
-import {useHistory, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { AccessTokenContext } from "../Context/AccessTokenContext";
 import { AccessTokenProvider } from "../Context/AccessTokenContext";
 
 function Search() {
-  const { getToken, setToken, logOut } = useContext(AccessTokenContext);
+  const { getToken, logOut } = useContext(AccessTokenContext);
   const [search, setSearch] = useState('');
   const [userInput, setUserInput] = useState("");
 
@@ -23,8 +23,6 @@ function Search() {
       })
   }
   const addBook = (bookId, shelfKey) => {
-    console.log(bookId);
-    console.log(shelfKey);
     axios
       .request({
         method: "PUT",
@@ -39,8 +37,10 @@ function Search() {
   };
   return (
     <div>
-      <label htmlFor="">Search For Books: </label>
+        <button onClick={logOut} class = 'log-out'>Click to Log Out</button>
+      <div><label htmlFor="" id = 'search-label'>Search For Books: </label>
       <input
+        id = 'search-input'
         type="text"
         value={userInput}
         onChange={(e) => {
@@ -48,7 +48,7 @@ function Search() {
         }}
         
       />
-      <button onClick={searchBooks}>Search</button>
+      <button onClick={searchBooks} class = 'search-button'>Search</button>
       {search && search.map( (book)=>{
           return(
           <div> <h3>{book.title}</h3>
@@ -69,6 +69,7 @@ function Search() {
           </div>
           )
       })}
+      </div>
       
     </div>
   );
