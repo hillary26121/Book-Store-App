@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useHistory, useParams } from 'react-router-dom';
 import axios from "axios";
 import { AccessTokenContext } from "../Context/AccessTokenContext";
@@ -9,9 +9,7 @@ import { AccessTokenProvider } from "../Context/AccessTokenContext";
 
 function BookShelf() {
   const { getToken, logOut } = useContext(AccessTokenContext);
-  const { bookId } = useParams();
   const [bookShelf, setBookShelf] = useState({});
-  const [details, setDetails] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
     const history = useHistory();
   const getBookShelf = () => {
@@ -25,7 +23,6 @@ function BookShelf() {
         },
       })
       .then((response) => {
-        console.log(response);
         setBookShelf(response.data.books);
       })
       .catch( (error)=>{
@@ -47,7 +44,6 @@ function BookShelf() {
         },
       })
       .then((response) => {
-        console.log(response);
         setBookShelf(response.data.books);
       })
       .catch( (error)=>{
@@ -84,25 +80,10 @@ function BookShelf() {
   };
 
   const getBookDetails = (bookId) => {
-    axios
-      .request({
-        method: "GET",
-        url: `/api/book/${bookId}`,
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        setDetails(response.data.book);
-        history.push('/book/:bookId')
-      })
-      .catch( (error)=>{
-        console.error(error);
-        if(error.response && error.response.status === 401){
-          setErrorMessage("You aren't logged in!");
-        } else{setErrorMessage("Something is wrong here, come back later when I've figured out my life.")}
-      })
+    console.log(bookId)
+        history.push(`/book/${bookId}`)
+      
+     
   };
 
 
@@ -119,10 +100,11 @@ function BookShelf() {
             return (
               <div>
                <h3>{book.title}</h3>
-                <img
+                <a onClick = {(e)=>getBookDetails(book.id, e.target.value)}><img
                   src={book.imageLinks.thumbnail}
                   alt="photo of 'pokemon handbook' cover"
                 />
+                </a>
                 <select
                   name=""
                   id="book-dropdown"
@@ -138,7 +120,6 @@ function BookShelf() {
                   Remove Book
                 </button>
                 </div>
-                <div><button onClick = {(e)=>getBookDetails(book.id, e.target.value)}>Book Details</button></div>
               </div>
             );
           })}
@@ -151,10 +132,11 @@ function BookShelf() {
             return (
               <div>
                 <h3>{book.title}</h3>
-                <img
+                <a href=""onClick = {(e)=>getBookDetails(book.id, e.target.value)}><img
                   src={book.imageLinks.thumbnail}
                   alt="photo of 'pokemon handbook' cover"
                 />
+                </a>
                 <select
                   name=""
                   id="book-dropdown"
@@ -171,7 +153,6 @@ function BookShelf() {
                   Remove Book
                 </button>
                 </div>
-                <button onClick = {(e)=>getBookDetails(book.id, e.target.value)}>Book Details</button>
               </div>
             );
           })}
@@ -185,10 +166,11 @@ function BookShelf() {
             return (
               <div>
                 <h3>{book.title}</h3>
-                <img
+                <a href="" onClick = {(e)=>getBookDetails(book.id, e.target.value)}><img
                   src={book.imageLinks.thumbnail}
                   alt="photo of 'pokemon handbook' cover"
                 />
+                </a>
                 <select
                   name=""
                   id="book-dropdown"
@@ -205,7 +187,6 @@ function BookShelf() {
                   Remove Book
                 </button>
                 </div>
-                <button onClick = {(e)=>getBookDetails(book.id, e.target.value)}>Book Details</button>
               </div>
             );
           })}

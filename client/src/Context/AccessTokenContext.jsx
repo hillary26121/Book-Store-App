@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from 'axios';
 
 export const AccessTokenContext = createContext();
@@ -33,6 +33,8 @@ export function AccessTokenProvider({ children }) {
          }
      })
   }
+
+  
 
   return<><AccessTokenContext.Provider
   value={{

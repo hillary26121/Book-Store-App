@@ -7,9 +7,10 @@ import { AccessTokenProvider } from "../Context/AccessTokenContext";
 function BookDetails(){
     const {getToken, logOut} = useContext(AccessTokenContext);
     const { bookId } = useParams();
-    const [details, setDetails] = useState('');
+    const [details, setDetails] = useState();
     const [errorMessage, setErrorMessage] = useState('');
-   
+  
+
     const getBookDetails = () => {
         console.log(bookId)
         axios
@@ -22,7 +23,6 @@ function BookDetails(){
             },
           })
           .then((response) => {
-            console.log(response)
             setDetails(response.data.book);
             
           })
@@ -40,16 +40,17 @@ function BookDetails(){
  return(
     <div>
         <button onClick = {logOut} class = 'log-out'>Click to Log Out</button>
-        {details && details.map( (book)=>{
-            return(
-                <div><h2>{book.title}</h2>
-                <img src={book.imageLinks && book.imageLinks.thumbnail} alt=""/>
-                <h3>{book.author && book.author}</h3>
-                <h3>{book.description && book.description}</h3>
+        {details ?
+            (
+                <div><h2>{details.title}</h2>
+                <img src={details.imageLinks && details.imageLinks.thumbnail} alt=""/>
+                <h3>{details.author && details.author}</h3>
+                <h3>{details.description && details.description}</h3>
                 </div>
 
             )
-        })}
+            :<div></div>
+        }
     </div>
  )
 }
